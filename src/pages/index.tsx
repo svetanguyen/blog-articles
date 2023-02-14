@@ -1,7 +1,51 @@
 import Head from 'next/head'
-import {Header} from '../components/Header'
+import { Header, ArticlesList, Banner } from '../components/'
+import { gql } from "@apollo/client";
+import client from '../../apollo-client'
 
-export default function Home({handleThemeSwitch, currentTheme}: {handleThemeSwitch: React.MouseEventHandler<HTMLButtonElement>, currentTheme: string}) {
+export interface ArticleItem {
+  id: string,
+  author: string,
+  createdAt: string,
+  score: number,
+  updatedAt: string,
+  title: string,
+  text: string,
+  type: string,
+  url: string
+}
+
+const ARTICLES_QUERY = gql`
+	 query ArticlesQuery($page: Int!) {
+		retrievePageArticles(page: $page) {
+			id
+			author
+			createdAt
+			score
+			updatedAt
+			title
+			text
+			type
+			url
+		}
+	}
+`;
+
+export async function getStaticProps() {
+  const { data } = await client.query({query: ARTICLES_QUERY, variables: { page: 1 }, context: {
+    headers: {
+      'Content-Type': 'application/JSON'
+    }
+  }});
+
+  return {
+    props: {
+      articles: data.retrievePageArticles,
+    },
+ };
+}
+
+export default function Home({handleThemeSwitch, currentTheme, articles}: {handleThemeSwitch: React.MouseEventHandler<HTMLButtonElement>, currentTheme: string, articles: [ArticleItem]}) {
   return (
     <>
       <Head>
@@ -12,6 +56,8 @@ export default function Home({handleThemeSwitch, currentTheme}: {handleThemeSwit
       </Head>
       <main>
         <Header currentTheme={currentTheme} handleThemeSwitch={handleThemeSwitch} />
+        <Banner />
+        <ArticlesList articles={articles} />
       </main>
     </>
   )

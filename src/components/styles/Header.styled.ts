@@ -8,4 +8,6 @@ export const HeaderWrapper = styled.header`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    box-shadow: rgb(0 0 0 / 5%) 0px 0.125rem 1rem;
+    transition: all 0.3s ease-in-out;
 `

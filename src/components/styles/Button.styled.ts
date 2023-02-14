@@ -12,5 +12,5 @@ export const Button = styled.button`
     box-shadow: rgb(0 0 0 / 5%) 0px 2px 16px;
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.03);
-    
+    font-weight: 600;
 `
