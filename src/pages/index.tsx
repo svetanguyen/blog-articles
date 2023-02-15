@@ -12,7 +12,7 @@ export interface ArticleItem {
   title: string,
   text: string,
   type: string,
-  url: string
+  url: string,
 }
 
 const ARTICLES_QUERY = gql`
