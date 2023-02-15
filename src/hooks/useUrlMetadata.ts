@@ -1,17 +1,18 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from "react";
 export function useUrlMetada(html: string) {
-	const [content, setContent] = useState('')
+  const [content, setContent] = useState("");
 
-	useEffect(() => {
-		if (!html) return
-		const parser = new DOMParser();
-		const htmlParsed = parser.parseFromString(html, "text/html");
-		const metadata: HTMLElement | null = htmlParsed.querySelector(
-			'meta[property="og:image"]'
-		);
+  useEffect(() => {
+    if (!html) return;
+    const parser = new DOMParser();
+    const htmlParsed = parser.parseFromString(html, "text/html");
+    const metadata: HTMLElement | null = htmlParsed.querySelector(
+      'meta[property="og:image"]'
+    );
 
-		if (metadata && metadata instanceof HTMLMetaElement) setContent(metadata.content)
-	}, [html])
+    if (metadata && metadata instanceof HTMLMetaElement)
+      setContent(metadata.content);
+  }, [html]);
 
-	return content
+  return content;
 }

@@ -1,51 +1,63 @@
-import Head from 'next/head'
-import { Header, ArticlesList, Banner } from '../components/'
+import Head from "next/head";
+import { Header, ArticlesList, Banner } from "../components/";
 import { gql } from "@apollo/client";
-import client from '../../apollo-client'
+import client from "../../apollo-client";
 
 export interface ArticleItem {
-  id: string,
-  author: string,
-  createdAt: string,
-  score: number,
-  updatedAt: string,
-  title: string,
-  text: string,
-  type: string,
-  url: string,
+  id: string;
+  author: string;
+  createdAt: string;
+  score: number;
+  updatedAt: string;
+  title: string;
+  text: string;
+  type: string;
+  url: string;
 }
 
 const ARTICLES_QUERY = gql`
-	 query ArticlesQuery($page: Int!) {
-		retrievePageArticles(page: $page) {
-			id
-			author
-			createdAt
-			score
-			updatedAt
-			title
-			text
-			type
-			url
-		}
-	}
+  query ArticlesQuery($page: Int!) {
+    retrievePageArticles(page: $page) {
+      id
+      author
+      createdAt
+      score
+      updatedAt
+      title
+      text
+      type
+      url
+    }
+  }
 `;
 
 export async function getStaticProps() {
-  const { data } = await client.query({query: ARTICLES_QUERY, variables: { page: 1 }, context: {
-    headers: {
-      'Content-Type': 'application/JSON'
-    }
-  }});
+  const { data } = await client.query({
+    query: ARTICLES_QUERY,
+    variables: { page: 1 },
+    context: {
+      headers: {
+        "Content-Type": "application/JSON",
+      },
+    },
+  });
 
   return {
     props: {
       articles: data.retrievePageArticles,
     },
- };
+  };
 }
 
-export default function Home({handleThemeSwitch, currentTheme, articles}: {handleThemeSwitch: React.MouseEventHandler<HTMLButtonElement>, currentTheme: string, articles: [ArticleItem]}) {
+export default function Home({
+  handleThemeSwitch,
+  currentTheme,
+  articles,
+}: {
+  handleThemeSwitch: React.MouseEventHandler<HTMLButtonElement>;
+  currentTheme: string;
+  articles: [ArticleItem];
+}) {
   return (
     <>
       <Head>
@@ -55,10 +67,13 @@ export default function Home({handleThemeSwitch, currentTheme, articles}: {handl
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Header currentTheme={currentTheme} handleThemeSwitch={handleThemeSwitch} />
+        <Header
+          currentTheme={currentTheme}
+          handleThemeSwitch={handleThemeSwitch}
+        />
         <Banner />
         <ArticlesList articles={articles} />
       </main>
     </>
-  )
+  );
 }
