@@ -33,7 +33,7 @@ export const ArticleCard = ({ article }: { article: ArticleItem }) => {
     <Card>
       <ImageComponent response={response} />
       <CardContent>
-        <a href={article.url}>
+        <a href={article.url} target="_blank" rel="noopener noreferrer">
           <Heading2>{article.title}</Heading2>
         </a>
         <Paragraph>{article.text}</Paragraph>
