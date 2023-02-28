@@ -1,3 +1,9 @@
+## Features
+- Blog articles
+- Light/Dark mode
+- Responsiveness
+- Infinite scroll
+
 ## Tech stack
 - Next.js
 - Typescript
